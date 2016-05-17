@@ -1,0 +1,13 @@
+---
+- hosts: test-kitchen
+  gather_facts: true
+  roles:
+    - role: ansible-bash_it
+      user: vagrant
+      aliases:
+        - general
+        - ansible
+      plugins:
+        - history
+      completions:
+        - git

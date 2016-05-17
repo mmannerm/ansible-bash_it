@@ -1,0 +1,31 @@
+---
+driver:
+  name: docker
+  require_chef_omnibus: false
+  username: vagrant
+
+provisioner:
+  name: ansible_playbook
+  hosts: test-kitchen
+  ansible_sudo: false
+  require_ansible_repo: false
+  require_ansible_omnibus: true
+  require_ruby_for_busser: true
+  require_chef_for_busser: false
+  ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+
+verifier:
+  name: Busser
+  ruby_bindir: '/usr/bin'
+  sudo: false
+
+platforms:
+  - name: ubuntu-14.04
+  - name: ubuntu-15.10
+  - name: ubuntu-16.04
+  - name: centos-7.2
+  - name: debian-8.4
+  - name: fedora-23
+
+suites:
+  - name: default

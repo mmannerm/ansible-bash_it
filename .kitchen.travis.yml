@@ -1,0 +1,7 @@
+---
+driver:
+  name: docker
+  require_chef_omnibus: false
+  username: vagrant
+  privileged: true
+

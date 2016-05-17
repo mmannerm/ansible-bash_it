@@ -1,0 +1,9 @@
+---
+repository: https://github.com/revans/bash-it.git
+version: master
+theme: pure
+aliases: []
+plugins: []
+completions: []
+
+user: "{{ ansible_user_id }}"

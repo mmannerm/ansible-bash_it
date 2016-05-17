@@ -1,0 +1,21 @@
+---
+rvm: 2.2
+
+sudo: required
+services: docker
+
+env:
+  matrix:
+    - INSTANCE=default-ubuntu-1510
+    - INSTANCE=default-centos-72
+
+install: bundle install
+
+# https://github.com/zuazo/kitchen-in-travis-native/issues/1#issuecomment-142455888
+before_script: sudo iptables -L DOCKER || sudo iptables -N DOCKER
+
+script:
+  - KITCHEN_LOCAL_YAML=.kitchen.travis.yml bundle exec kitchen verify ${INSTANCE}
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

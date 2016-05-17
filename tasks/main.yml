@@ -1,0 +1,95 @@
+---
+- name: Register home directory for {{ user }}
+  shell: >
+    getent passwd {{ user }} | cut -d: -f6
+  changed_when: false
+  register: user_home
+
+- name: Register current login shell for {{ user }}
+  shell: >
+    getent passwd {{ user }} | cut -d: -f7
+  changed_when: false
+  register: user_shell
+
+- assert: { that: user_home.stdout != "" }
+- assert: { that: user_shell.stdout != "" }
+
+- name: clone bash_it for {{ user }}
+  git:
+    repo: "{{ repository }}"
+    dest: "{{ user_home.stdout }}/.bash_it"
+    version: "{{ version }}"
+  become: "{{ user }}"
+
+- name: .bash_profile loads .bashrc for {{ user }}
+  blockinfile:
+    dest: "{{ user_home.stdout }}/.bash_profile"
+    create: yes
+    owner: "{{ user }}"
+    block: |
+      if [ -f ~/.bashrc ]; then
+        source ~/.bashrc
+      fi
+
+- name: change shell to bash for {{ user }}
+  command: "chsh -s /bin/bash {{ user }}"
+  become_user: root
+  when: user_shell.stdout != "/bin/bash"
+
+- name: install bash_it on .bashrc for {{ user }}
+  lineinfile:
+    dest: "{{ user_home.stdout }}/.bashrc"
+    create: yes
+    owner: "{{ user }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - { regexp: '^export BASH_IT=', line: 'export BASH_IT="$HOME/.bash_it"' }
+    - { regexp: '^export BASH_IT_THEME=', line: 'export BASH_IT_THEME="{{ theme }}"' }
+    - { regexp: '^source \$BASH_IT', line: 'source $BASH_IT/bash_it.sh' }
+
+- name: update_terminal_cwd for Mac OS X for {{ user }}
+  lineinfile:
+    dest: "{{ user_home.stdout }}/.bashrc"
+    create: yes
+    owner: "{{ user }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - { regexp: 'PROMPT_COMMAND;update_terminal_cwd;', line: '[ "$TERM_PROGRAM" == "Apple_Terminal" ] && [ -z "$INSIDE_EMACS" ] && export PROMPT_COMMAND="$PROMPT_COMMAND;update_terminal_cwd;"' }
+  when: ansible_os_family == "Darwin"
+
+- name: initialize bash_it directories for {{ user }}
+  file:
+    path: "{{ user_home.stdout }}/.bash_it/{{ item }}/enabled"
+    state: directory
+    owner: "{{ user }}"
+  with_items:
+    - "plugins"
+    - "aliases"
+    - "completion"
+
+- name: install bash_it plugins for {{ user }}
+  file:
+    src: "{{ user_home.stdout }}/.bash_it/plugins/available/{{ item }}.plugin.bash"
+    dest: "{{ user_home.stdout }}/.bash_it/plugins/enabled/{{ item }}.plugin.bash"
+    state: link
+    owner: "{{ user }}"
+  with_items: '{{ plugins }}'
+
+- name: install bash_it aliases for {{ user }}
+  file:
+    src: "{{ user_home.stdout }}/.bash_it/aliases/available/{{ item }}.aliases.bash"
+    dest: "{{ user_home.stdout }}/.bash_it/aliases/enabled/{{ item }}.aliases.bash"
+    state: link
+    owner: "{{ user }}"
+  with_items: '{{ aliases }}'
+
+- name: install bash_it completions for {{ user }}
+  file:
+    src: "{{ user_home.stdout }}/.bash_it/completion/available/{{ item }}.completion.bash"
+    dest: "{{ user_home.stdout }}/.bash_it/completion/enabled/{{ item }}.completion.bash"
+    state: link
+    owner: "{{ user }}"
+  with_items: '{{ completions }}'
+
