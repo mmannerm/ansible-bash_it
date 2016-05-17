@@ -4,6 +4,8 @@ ansible-bash_it
 Ansible role to deploy [bash-it](https://github.com/Bash-it/bash-it) framework -
 a collection of community Bash commands ands scripts.
 
+[![Build Status](https://travis-ci.org/mmannerm/ansible-bash_it.svg?branch=master)](https://travis-ci.org/mmannerm/ansible-bash_it)
+
 Usage
 -----
 
