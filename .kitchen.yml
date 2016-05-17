@@ -15,7 +15,7 @@ provisioner:
   ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 
 verifier:
-  name: Busser
+  name: busser
   ruby_bindir: '/usr/bin'
   sudo: false
 
