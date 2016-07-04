@@ -9,7 +9,7 @@ a collection of community Bash commands ands scripts.
 Usage
 -----
 
-Include the role, and specify the user you want to install the bash_it for.
+Include the role, and specify the user you want to install the bash-it for.
 Note: The role will change the default shell for the user to be `/bin/bash`.
 
 | Variable    | Default value                         | Description                      |
@@ -28,7 +28,7 @@ Example Playbook
 ```yaml
 - hosts: servers
   roles:
-    - role: mmannerm.ansible-bash_it
+    - role: mmannerm.bash_it
       user: vagrant
       aliases:
         - general
