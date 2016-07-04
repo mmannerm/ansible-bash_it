@@ -1,0 +1,13 @@
+---
+- name: Register home directory for {{ user }}
+  shell: >
+    getent passwd {{ user }} | cut -d: -f6
+  changed_when: false
+  register: user_home
+
+- name: Register current login shell for {{ user }}
+  shell: >
+    getent passwd {{ user }} | cut -d: -f7
+  changed_when: false
+  register: user_shell
+
