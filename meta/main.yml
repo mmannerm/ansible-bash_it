@@ -25,6 +25,8 @@ galaxy_info:
     - any
   galaxy_tags:
     - bash
+    - osx
+    - shell
 
 dependencies: []
 
