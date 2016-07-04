@@ -1,6 +1,6 @@
 galaxy_info:
   author: Mika Mannermaa
-  description: Bash-it ansible playbook. See https://github.com/Bash-it/bash-it
+  description: Bash-it ansible playbook. Works with various Linux distributions and Mac OS X 10.10+. See https://github.com/Bash-it/bash-it
   license: Apache 2.0
   min_ansible_version: 2.0
   platforms:
@@ -19,6 +19,10 @@ galaxy_info:
   - name: Debian
     versions:
     - wheezy
+  - name: GenericUNIX
+    versions:
+    - all
+    - any
   galaxy_tags:
     - bash
 
