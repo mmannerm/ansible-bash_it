@@ -3,11 +3,15 @@
   shell: >
     getent passwd {{ user }} | cut -d: -f6
   changed_when: false
-  register: user_home
+  register: linux_user_home
 
 - name: Register current login shell for {{ user }}
   shell: >
     getent passwd {{ user }} | cut -d: -f7
   changed_when: false
-  register: user_shell
+  register: linux_user_shell
 
+- name: Set facts
+  set_fact:
+    user_home: "{{ linux_user_home.stdout }}"
+    user_shell: "{{ linux_user_shell.stdout }}"

@@ -3,11 +3,15 @@
   shell: >
     echo /Users/{{ user }}
   changed_when: false
-  register: user_home
+  register: darwin_user_home
 
 - name: Register current login shell for {{ user }}
   shell: >
     dscl . -read /Users/{{ user }} UserShell | sed 's/UserShell: //g'
   changed_when: false
-  register: user_shell
+  register: darwin_user_shell
 
+- name: Set facts
+  set_fact:
+    user_home: "{{ darwin_user_home.stdout }}"
+    user_shell: "{{ darwin_user_shell.stdout }}"
