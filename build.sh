@@ -19,6 +19,14 @@ if [ "$(ls -A ${build_dir}/images)" ]; then
 else
     for f in ${source_dir}/Install\ OS\ X*.app
     do
+        [ -e "$f" ] || break
+        echo "Preparing $f"
+        sudo ${build_dir}/osx-vm-templates/prepare_iso/prepare_iso.sh ${prepare_flags} "${f}" "${build_dir}/images"
+    done
+    for f in ${source_dir}/Install\ macOS*.app
+    do
+        [ -e "$f" ] || break
+        echo "Preparing $f"
         sudo ${build_dir}/osx-vm-templates/prepare_iso/prepare_iso.sh ${prepare_flags} "${f}" "${build_dir}/images"
     done
 fi

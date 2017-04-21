@@ -20,13 +20,11 @@ describe file("#{Dir.home}/.bash_it/plugins/enabled") do
   it { should be_directory }
 end
 
-if os[:family] != 'darwin'
-  describe file("#{Dir.home}/.bashrc") do
-    it { should be_file }
-    its(:content) { should include "export BASH_IT=" }
-    its(:content) { should include "export BASH_IT_THEME=" }
-    its(:content) { should include "source $BASH_IT/bash_it.sh" }
-  end
+describe file("#{Dir.home}/.bashrc") do
+  it { should be_file }
+  its(:content) { should include "export BASH_IT=" }
+  its(:content) { should include "export BASH_IT_THEME=" }
+  its(:content) { should include "source $BASH_IT/bash_it.sh" }
 end
 
 describe command("/bin/bash -i -l -c reload") do

@@ -46,17 +46,6 @@
     - { regexp: '^export BASH_IT_THEME=', line: 'export BASH_IT_THEME="{{ theme }}"' }
     - { regexp: '^source \$BASH_IT', line: 'source $BASH_IT/bash_it.sh' }
 
-- name: update_terminal_cwd for Mac OS X for {{ user }}
-  lineinfile:
-    dest: "{{ user_home }}/.bashrc"
-    create: yes
-    owner: "{{ user }}"
-    regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
-  with_items:
-    - { regexp: 'PROMPT_COMMAND;update_terminal_cwd;', line: '[ "$TERM_PROGRAM" == "Apple_Terminal" ] && [ -z "$INSIDE_EMACS" ] && export PROMPT_COMMAND="$PROMPT_COMMAND;update_terminal_cwd;" || true' }
-  when: ansible_os_family == "Darwin"
-
 - name: initialize bash_it directories for {{ user }}
   file:
     path: "{{ user_home }}/.bash_it/{{ item }}/enabled"
