@@ -1,10 +1,10 @@
 ---
 - name: detect Linux variables
-  include: linux_vars.yml
+  import_tasks: linux_vars.yml
   when: ansible_os_family != "Darwin"
 
 - name: detect Mac OS X variables
-  include: osx_vars.yml
+  import_tasks: osx_vars.yml
   when: ansible_os_family == "Darwin"
 
 - name: assert home directory is detected
@@ -62,7 +62,8 @@
     dest: "{{ user_home }}/.bash_it/plugins/enabled/{{ item }}.plugin.bash"
     state: link
     owner: "{{ user }}"
-  with_items: '{{ plugins }}'
+  with_items: "{{ plugins }}"
+  when: plugins is defined
 
 - name: install bash_it aliases for {{ user }}
   file:
@@ -70,7 +71,8 @@
     dest: "{{ user_home }}/.bash_it/aliases/enabled/{{ item }}.aliases.bash"
     state: link
     owner: "{{ user }}"
-  with_items: '{{ aliases }}'
+  with_items: "{{ aliases }}"
+  when: aliases is defined
 
 - name: install bash_it completions for {{ user }}
   file:
@@ -78,5 +80,6 @@
     dest: "{{ user_home }}/.bash_it/completion/enabled/{{ item }}.completion.bash"
     state: link
     owner: "{{ user }}"
-  with_items: '{{ completions }}'
+  with_items: "{{ completions }}"
+  when: completions is defined
 
