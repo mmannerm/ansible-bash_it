@@ -43,7 +43,7 @@
     line: "{{ item.line }}"
   with_items:
     - { regexp: '^export BASH_IT=', line: 'export BASH_IT="$HOME/.bash_it"' }
-    - { regexp: '^export BASH_IT_THEME=', line: 'export BASH_IT_THEME="{{ theme }}"' }
+    - { regexp: '^export BASH_IT_THEME=', line: 'export BASH_IT_THEME={{ theme }}' }
     - { regexp: '^source \$BASH_IT', line: 'source $BASH_IT/bash_it.sh' }
 
 - name: initialize bash_it directories for {{ user }}
