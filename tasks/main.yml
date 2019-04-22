@@ -17,7 +17,7 @@
     repo: "{{ repository }}"
     dest: "{{ user_home }}/.bash_it"
     version: "{{ version }}"
-  become: "{{ user }}"
+  become_user: "{{ user }}"
 
 - name: .bash_profile loads .bashrc for {{ user }}
   blockinfile:
