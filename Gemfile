@@ -9,4 +9,5 @@ end
 
 group :osx do
   gem 'kitchen-vagrant', '>=0.20.0'
+  gem 'macinbox', '>=3.3.0'
 end

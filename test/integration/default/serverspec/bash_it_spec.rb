@@ -27,7 +27,7 @@ describe file("#{Dir.home}/.bashrc") do
   its(:content) { should include "source $BASH_IT/bash_it.sh" }
 end
 
-describe command("/bin/bash -i -l -c reload") do
+describe command("/bin/bash -i -l -c reload_aliases") do
   its(:stderr) { should_not include "command not found" }
   its(:exit_status) { should eq 0 }
 end
@@ -47,22 +47,17 @@ describe command("echo $SHELL") do
   its(:exit_status) { should eq 0 }
 end
 
-describe file("#{Dir.home}/.bash_it/aliases/enabled/general.aliases.bash") do
-  it { should exist }
-  it { should be_symlink }
+describe command("/bin/bash -i -l -c \"compgen -G #{Dir.home}/.bash_it/enabled/*ansible.aliases.bash\"") do
+  its(:stdout) { should include "ansible.aliases.bash" }
+  its(:exit_status) { should eq 0 }
 end
 
-describe file("#{Dir.home}/.bash_it/aliases/enabled/ansible.aliases.bash") do
-  it { should exist }
-  it { should be_symlink }
+describe command("/bin/bash -i -l -c \"compgen -G #{Dir.home}/.bash_it/enabled/*history.plugin.bash\"") do
+  its(:stdout) { should include "history.plugin.bash" }
+  its(:exit_status) { should eq 0 }
 end
 
-describe file("#{Dir.home}/.bash_it/plugins/enabled/history.plugin.bash") do
-  it { should exist }
-  it { should be_symlink }
-end
-
-describe file("#{Dir.home}/.bash_it/completion/enabled/git.completion.bash") do
-  it { should exist }
-  it { should be_symlink }
+describe command("/bin/bash -i -l -c \"compgen -G #{Dir.home}/.bash_it/enabled/*git.completion.bash\"") do
+  its(:stdout) { should include "git.completion.bash" }
+  its(:exit_status) { should eq 0 }
 end

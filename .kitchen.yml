@@ -20,12 +20,9 @@ verifier:
   sudo: false
 
 platforms:
-  - name: ubuntu-14.04
-  - name: ubuntu-15.10
-  - name: ubuntu-16.04
-  - name: centos-7.2
-  - name: debian-8.4
-  - name: fedora-23
+  - name: ubuntu-18.04
+  - name: debian-9.9
+  - name: fedora-29
 
 suites:
   - name: default

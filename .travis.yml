@@ -1,14 +1,14 @@
 ---
 language: ruby
-rvm: 2.2
+rvm: 2.6
 
 sudo: required
 services: docker
 
 env:
   matrix:
-    - INSTANCE=default-ubuntu-1510
-    - INSTANCE=default-centos-72
+    - INSTANCE=default-ubuntu-1804
+    - INSTANCE=default-centos-7
 
 
 bundler_args: --without osx
