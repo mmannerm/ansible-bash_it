@@ -8,8 +8,6 @@ services: docker
 env:
   matrix:
     - INSTANCE=default-ubuntu-1804
-    - INSTANCE=default-centos-7
-
 
 bundler_args: --without osx
 
