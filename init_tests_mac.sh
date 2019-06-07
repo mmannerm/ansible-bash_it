@@ -25,5 +25,3 @@ for f in ${source_dir}/Install\ macOS*.app; do
         sudo bundler exec macinbox --name macos --installer "${f}" --box-format virtualbox --no-gui --no-fullscreen
     fi
 done
-
-bundle exec kitchen test
