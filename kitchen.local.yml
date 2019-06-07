@@ -1,0 +1,18 @@
+---
+platforms:
+  - name: ubuntu-18.04
+  - name: debian-9.9
+  - name: macos-10.14
+    provisioner:
+      require_pip: true
+      ansible_binary_path: /usr/local/bin
+    driver:
+      name: vagrant
+      box: macos
+      box_version: 10.14.5
+      provision: true
+      vagrantfiles:
+        - osx_vagrant.rb
+      synced_folders:
+        - [".", "/vagrant", "type: :rsync, rsync__chown: false"]
+

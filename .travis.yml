@@ -15,7 +15,7 @@ bundler_args: --without osx
 before_script: sudo iptables -L DOCKER || sudo iptables -N DOCKER
 
 script:
-  - KITCHEN_LOCAL_YAML=.kitchen.travis.yml bundle exec kitchen verify ${INSTANCE}
+  - KITCHEN_LOCAL_YAML=kitchen.travis.yml bundle exec kitchen verify ${INSTANCE}
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

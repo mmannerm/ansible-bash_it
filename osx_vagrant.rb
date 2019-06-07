@@ -1,7 +1,7 @@
 Vagrant.configure(2) do |config|
-	config.vm.provision "shell", inline: <<-SHELL
-		easy_install pip
-		pip install --upgrade setuptools
+	config.vm.provision "shell", privileged: false, inline: <<-SHELL
+                ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+                brew install python
 	SHELL
 end
 

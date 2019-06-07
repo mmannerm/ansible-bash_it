@@ -1,26 +1,24 @@
-require 'spec_helper'
-
-describe file("#{Dir.home}/.bash_it") do
+describe file(".bash_it") do
   it { should exist }
   it { should be_directory }
 end
 
-describe file("#{Dir.home}/.bash_it/completion/enabled") do
+describe file(".bash_it/completion/enabled") do
   it { should exist }
   it { should be_directory }
 end
 
-describe file("#{Dir.home}/.bash_it/aliases/enabled") do
+describe file(".bash_it/aliases/enabled") do
   it { should exist }
   it { should be_directory }
 end
 
-describe file("#{Dir.home}/.bash_it/plugins/enabled") do
+describe file(".bash_it/plugins/enabled") do
   it { should exist }
   it { should be_directory }
 end
 
-describe file("#{Dir.home}/.bashrc") do
+describe file(".bashrc") do
   it { should be_file }
   its(:content) { should include "export BASH_IT=" }
   its(:content) { should include "export BASH_IT_THEME=" }
@@ -47,17 +45,17 @@ describe command("echo $SHELL") do
   its(:exit_status) { should eq 0 }
 end
 
-describe command("/bin/bash -i -l -c \"compgen -G #{Dir.home}/.bash_it/enabled/*ansible.aliases.bash\"") do
+describe bash("compgen -G .bash_it/enabled/*ansible.aliases.bash") do
   its(:stdout) { should include "ansible.aliases.bash" }
   its(:exit_status) { should eq 0 }
 end
 
-describe command("/bin/bash -i -l -c \"compgen -G #{Dir.home}/.bash_it/enabled/*history.plugin.bash\"") do
+describe bash("compgen -G .bash_it/enabled/*history.plugin.bash") do
   its(:stdout) { should include "history.plugin.bash" }
   its(:exit_status) { should eq 0 }
 end
 
-describe command("/bin/bash -i -l -c \"compgen -G #{Dir.home}/.bash_it/enabled/*git.completion.bash\"") do
+describe bash("compgen -G .bash_it/enabled/*git.completion.bash") do
   its(:stdout) { should include "git.completion.bash" }
   its(:exit_status) { should eq 0 }
 end

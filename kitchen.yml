@@ -10,19 +10,15 @@ provisioner:
   ansible_sudo: false
   require_ansible_repo: false
   require_ansible_omnibus: true
-  require_ruby_for_busser: true
   require_chef_for_busser: false
   ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 
 verifier:
-  name: busser
-  ruby_bindir: '/usr/bin'
-  sudo: false
+  name: inspec
 
 platforms:
   - name: ubuntu-18.04
   - name: debian-9.9
-  - name: fedora-29
 
 suites:
   - name: default
