@@ -3,21 +3,6 @@ describe file(".bash_it") do
   it { should be_directory }
 end
 
-describe file(".bash_it/completion/enabled") do
-  it { should exist }
-  it { should be_directory }
-end
-
-describe file(".bash_it/aliases/enabled") do
-  it { should exist }
-  it { should be_directory }
-end
-
-describe file(".bash_it/plugins/enabled") do
-  it { should exist }
-  it { should be_directory }
-end
-
 describe file(".bashrc") do
   it { should be_file }
   its(:content) { should include "export BASH_IT=" }

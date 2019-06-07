@@ -20,5 +20,6 @@ galaxy_info:
     - bash
     - osx
     - shell
+    - macos
 
 dependencies: []

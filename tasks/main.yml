@@ -49,39 +49,26 @@
     - { regexp: '^export BASH_IT_THEME=', line: 'export BASH_IT_THEME={{ theme }}' }
     - { regexp: '^source \$BASH_IT', line: 'source $BASH_IT/bash_it.sh' }
 
-- name: initialize bash_it directories for {{ user }}
-  file:
-    path: "{{ user_home }}/.bash_it/{{ item }}/enabled"
-    state: directory
-    owner: "{{ user }}"
-  with_items:
-    - "plugins"
-    - "aliases"
-    - "completion"
-
 - name: install bash_it plugins for {{ user }}
-  file:
-    src: "{{ user_home }}/.bash_it/plugins/available/{{ item }}.plugin.bash"
-    dest: "{{ user_home }}/.bash_it/plugins/enabled/{{ item }}.plugin.bash"
-    state: link
-    owner: "{{ user }}"
-  with_items: "{{ plugins }}"
+  command: "/bin/bash -i -l -c \"bash-it enable plugin {{ plugins|join(' ') }}\""
+  become: yes
+  become_user: "{{ user }}"
   when: plugins is defined
+  register: plugins_result
+  changed_when: "plugins_result.stdout_lines | reject('match', '.* is already enabled.') | list | length > 0"
 
 - name: install bash_it aliases for {{ user }}
-  file:
-    src: "{{ user_home }}/.bash_it/aliases/available/{{ item }}.aliases.bash"
-    dest: "{{ user_home }}/.bash_it/aliases/enabled/{{ item }}.aliases.bash"
-    state: link
-    owner: "{{ user }}"
-  with_items: "{{ aliases }}"
+  command: "/bin/bash -i -l -c \"bash-it enable alias {{ aliases|join(' ') }}\""
+  become: yes
+  become_user: "{{ user }}"
   when: aliases is defined
+  register: aliases_result
+  changed_when: "aliases_result.stdout_lines | reject('match', '.* is already enabled.') | list | length > 0"
 
 - name: install bash_it completions for {{ user }}
-  file:
-    src: "{{ user_home }}/.bash_it/completion/available/{{ item }}.completion.bash"
-    dest: "{{ user_home }}/.bash_it/completion/enabled/{{ item }}.completion.bash"
-    state: link
-    owner: "{{ user }}"
-  with_items: "{{ completions }}"
+  command: "/bin/bash -i -l -c \"bash-it enable completion {{ completions|join(' ') }}\""
+  become: yes
+  become_user: "{{ user }}"
   when: completions is defined
+  register: completions_result
+  changed_when: "completions_result.stdout_lines | reject('match', '.* is already enabled.') | list | length > 0"

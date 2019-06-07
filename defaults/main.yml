@@ -1,8 +1,13 @@
 ---
-repository: https://github.com/revans/bash-it.git
+repository: https://github.com/bash-it/bash-it.git
 version: master
 theme: pure
-aliases: []
-plugins: []
-completions: []
+aliases:
+  - general
+plugins:
+  - base
+  - alias-completion
+completions:
+  - bash-it
+  - system
 user: "{{ ansible_user_id }}"
