@@ -1,5 +1,5 @@
 ---
-- hosts: test-kitchen
+- hosts: all
   gather_facts: true
   roles:
     - role: ansible-bash_it

@@ -6,11 +6,15 @@ driver:
 
 provisioner:
   name: ansible_playbook
-  hosts: test-kitchen
+  hosts: testkitchen
   ansible_sudo: false
+  sudo_command: "sudo -E -H"
+  ansible_verbose: true
+  ansible_verbosity: 2
   require_ansible_repo: false
-  require_ansible_omnibus: true
+  require_ansible_omnibus: false
   require_chef_for_busser: false
+  require_pip: true
   ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 
 verifier:

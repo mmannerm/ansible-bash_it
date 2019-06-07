@@ -4,7 +4,8 @@ platforms:
   - name: debian-9.9
   - name: macos-10.14
     provisioner:
-      require_pip: true
+      require_ansible_omnibus: false
+      require_pip: false
       ansible_binary_path: /usr/local/bin
     driver:
       name: vagrant
