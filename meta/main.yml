@@ -4,21 +4,15 @@ galaxy_info:
   license: Apache 2.0
   min_ansible_version: 2.0
   platforms:
-  - name: EL
-    versions:
-    - 7
-  - name: Fedora
-    versions:
-    - 23
   - name: Ubuntu
     versions:
-    - trusty
-    - vivid
-    - wily
     - xenial
+    - bionic
+    - disco
   - name: Debian
     versions:
-    - wheezy
+    - stretch
+    - jessie
   - name: GenericUNIX
     versions:
     - all
