@@ -2,23 +2,20 @@
 - name: detect Linux variables
   import_tasks: linux_vars.yml
   when: ansible_os_family != "Darwin"
-
 - name: detect Mac OS X variables
   import_tasks: osx_vars.yml
   when: ansible_os_family == "Darwin"
-
 - name: assert home directory is detected
-  assert: { that: user_home != "" }
+  assert: { that: user_home | length > 0 }
 - name: assert current shell is detected
-  assert: { that: user_shell != "" }
-
+  assert: { that: user_shell | length > 0 }
 - name: clone bash_it for {{ user }}
   git:
     repo: "{{ repository }}"
     dest: "{{ user_home }}/.bash_it"
     version: "{{ version }}"
+  become: yes
   become_user: "{{ user }}"
-
 - name: .bash_profile loads .bashrc for {{ user }}
   blockinfile:
     dest: "{{ user_home }}/.bash_profile"
@@ -28,12 +25,11 @@
       if [ -f ~/.bashrc ]; then
         source ~/.bashrc
       fi
-
 - name: change shell to bash for {{ user }}
   command: "chsh -s /bin/bash {{ user }}"
+  become: yes
   become_user: root
   when: user_shell != "/bin/bash"
-
 - name: install bash_it on .bashrc for {{ user }}
   lineinfile:
     dest: "{{ user_home }}/.bashrc"
@@ -45,7 +41,6 @@
     - { regexp: '^export BASH_IT=', line: 'export BASH_IT="$HOME/.bash_it"' }
     - { regexp: '^export BASH_IT_THEME=', line: 'export BASH_IT_THEME={{ theme }}' }
     - { regexp: '^source \$BASH_IT', line: 'source $BASH_IT/bash_it.sh' }
-
 - name: initialize bash_it directories for {{ user }}
   file:
     path: "{{ user_home }}/.bash_it/{{ item }}/enabled"
@@ -55,7 +50,6 @@
     - "plugins"
     - "aliases"
     - "completion"
-
 - name: install bash_it plugins for {{ user }}
   file:
     src: "{{ user_home }}/.bash_it/plugins/available/{{ item }}.plugin.bash"
@@ -64,7 +58,6 @@
     owner: "{{ user }}"
   with_items: "{{ plugins }}"
   when: plugins is defined
-
 - name: install bash_it aliases for {{ user }}
   file:
     src: "{{ user_home }}/.bash_it/aliases/available/{{ item }}.aliases.bash"
@@ -73,7 +66,6 @@
     owner: "{{ user }}"
   with_items: "{{ aliases }}"
   when: aliases is defined
-
 - name: install bash_it completions for {{ user }}
   file:
     src: "{{ user_home }}/.bash_it/completion/available/{{ item }}.completion.bash"
@@ -82,4 +74,3 @@
     owner: "{{ user }}"
   with_items: "{{ completions }}"
   when: completions is defined
-
