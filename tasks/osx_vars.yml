@@ -1,15 +1,11 @@
 ---
-- name: Register home directory for {{ user }}
-  shell: >
-    echo /Users/{{ user }}
-  changed_when: false
-  register: darwin_user_home
 - name: Register current login shell for {{ user }}
-  shell: >
-    dscl . -read /Users/{{ user }} UserShell | sed 's/UserShell: //g'
+  command: >
+    dscl . -read /Users/{{ user }} UserShell
   changed_when: false
   register: darwin_user_shell
+
 - name: Set facts
   set_fact:
-    user_home: "{{ darwin_user_home.stdout }}"
-    user_shell: "{{ darwin_user_shell.stdout }}"
+    user_home: "/Users/{{ user }}"
+    user_shell: "{{ darwin_user_shell.stdout.split(' ')[1] }}"

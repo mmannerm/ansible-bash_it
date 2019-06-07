@@ -4,4 +4,3 @@ driver:
   require_chef_omnibus: false
   username: vagrant
   privileged: true
-

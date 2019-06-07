@@ -8,7 +8,6 @@ galaxy_info:
     versions:
     - xenial
     - bionic
-    - disco
   - name: Debian
     versions:
     - stretch
@@ -21,5 +20,5 @@ galaxy_info:
     - bash
     - osx
     - shell
-dependencies: []
 
+dependencies: []

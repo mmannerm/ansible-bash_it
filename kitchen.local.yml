@@ -16,4 +16,3 @@ platforms:
         - osx_vagrant.rb
       synced_folders:
         - [".", "/vagrant", "type: :rsync, rsync__chown: false"]
-
