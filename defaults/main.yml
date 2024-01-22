@@ -11,3 +11,4 @@ completions:
   - bash-it
   - system
 user: "{{ ansible_user_id }}"
+bashrc_install: true
