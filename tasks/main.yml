@@ -48,6 +48,7 @@
     - { regexp: '^export BASH_IT=', line: 'export BASH_IT="$HOME/.bash_it"' }
     - { regexp: '^export BASH_IT_THEME=', line: 'export BASH_IT_THEME={{ theme }}' }
     - { regexp: '^source \$BASH_IT', line: 'source $BASH_IT/bash_it.sh' }
+  when: bashrc_install
 
 - name: install bash_it plugins for {{ user }}
   command: "/bin/bash -i -l -c \"bash-it enable plugin {{ plugins|join(' ') }}\""

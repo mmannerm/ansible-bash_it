@@ -12,15 +12,19 @@ Usage
 Include the role, and specify the user you want to install the bash-it for.
 Note: The role will change the default shell for the user to be `/bin/bash`.
 
-| Variable    | Default value                          | Description                      |
-|-------------|----------------------------------------|----------------------------------|
-| user        | {{ ansible_user_id }}                  | User to install bash-it for      |
-| theme       | pure                                   | Bash-it Theme to install         |
-| aliases     | []                                     | A list of aliases to install     |
-| plugins     | []                                     | A list of plugins to install     |
-| completions | []                                     | A list of completions to install |
-| repository  | https://github.com/bash-it/bash-it.git | Git repository for the bash-it   |
-| version     | master                                 | Git version tag to retrieve      |
+| Variable       | Default value                          | Description                                |
+|----------------|----------------------------------------|--------------------------------------------|
+| user           | {{ ansible_user_id }}                  | User to install bash-it for                |
+| theme          | pure                                   | Bash-it Theme to install                   |
+| aliases        | []                                     | A list of aliases to install               |
+| plugins        | []                                     | A list of plugins to install               |
+| completions    | []                                     | A list of completions to install           |
+| repository     | https://github.com/bash-it/bash-it.git | Git repository for the bash-it             |
+| version        | master                                 | Git version tag to retrieve                |
+| bashrc_install | true                                   | Update .bashrc to source bash_it.sh or not |
+
+If you have wish to update `~/.bashrc` yourself rather than have this role
+add code to source `bash_it.sh`, set the `bashrc_install` variable to `false`.
 
 Example Playbook
 ----------------
